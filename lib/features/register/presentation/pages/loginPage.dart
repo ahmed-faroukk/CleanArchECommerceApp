@@ -148,7 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _buildBButtonRoundedWithBackground() {
     return ElevatedButton(
       onPressed: () {
-
+        Navigator.pushNamed(context, "/ShopScreen");
       },
       style: ButtonStyle(
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(

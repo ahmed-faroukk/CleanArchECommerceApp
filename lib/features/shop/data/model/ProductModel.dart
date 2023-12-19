@@ -22,16 +22,16 @@ class ProductModel extends ProductsEntity {
   );
 
   // get product from json
+  factory ProductModel.fromJson(Map<String, dynamic> map) {
+    return ProductModel(
+      title: map['title'] ?? "",
+      // Convert 'price' to a numeric type, assuming it's a number
+      price: (map['price'] as num?)?.toString() ?? "",
+      category: map['category'] ?? "",
+      description: map['description'] ?? "",
+      image: map['image'] ?? "",
+    );
+  }
 
-factory ProductModel.fromJson(Map <String , dynamic> map ){
-  return ProductModel(
-      title : map['title'] ?? "",
-      price : map['price'] ?? "",
-      category : map['category'] ?? "",
-      description : map['description'] ?? "",
-      image : map['image'] ?? ""
-  );
-
-}
 
 }

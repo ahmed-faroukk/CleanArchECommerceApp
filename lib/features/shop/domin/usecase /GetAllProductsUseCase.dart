@@ -8,7 +8,6 @@ class GetAllProductsUseCase implements  UseCase<Resource<List<ProductsEntity>>, 
   final ShopRepo repo;
   GetAllProductsUseCase(this.repo);
 
-
   @override
   Future<Resource<List<ProductsEntity>>> invoke({void params}) {
     return repo.getAllProducts();

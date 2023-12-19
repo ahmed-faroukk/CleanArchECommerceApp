@@ -34,8 +34,7 @@ class RemoteProductBloc extends Bloc<RemoteProductEvent, RemoteProductState> {
     on<GetJeweleryProducts>(onGetJeweleryProducts);
   }
 
-  void onGetAllProducts(
-      GetAllProducts event, Emitter<RemoteProductState> emit) async {
+  void onGetAllProducts(GetAllProducts event, Emitter<RemoteProductState> emit) async {
     final dataState = await getAllProductsUseCase.invoke();
     if (dataState is Success && dataState.data!.isNotEmpty) {
       emit(RemoteProductDone(dataState.data!));
