@@ -1,15 +1,29 @@
-import 'package:ecommerce_clean_arch/comfig/theme/AppTheme.dart';
+import 'package:ecommerce_clean_arch/features/Cart/presentation/ViewModel/CartViewModel.dart';
+import 'package:ecommerce_clean_arch/features/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:provider/provider.dart';
 
+import 'comfig/routes/AppRoutes.dart';
 import 'di.dart';
 
-void main()  async{
+void main()  async {
   WidgetsFlutterBinding.ensureInitialized();
-  await initializeDependencies();
-  runApp(const MyApp());
+  await initializeAppDependencies();
+
+  runApp(
+    MultiProvider(providers: [
+      ChangeNotifierProvider<CartViewModel>(
+        create: (_) => CartViewModel(cartUseCases: s1()), // Access the instance using Get.find
+      ),
+    ],
+    child: const MyApp(),
+    )
+  );
   ControllerInit.init();
+
 }
 
 class MyApp extends StatelessWidget {
@@ -17,9 +31,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return   const GetMaterialApp(
+    return const GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(body: Text(""),),
+      onGenerateRoute: AppRoutes.onGenerateRoutes,
+      home: Scaffold(body: SplashScreen(),),
     );
   }
 }
