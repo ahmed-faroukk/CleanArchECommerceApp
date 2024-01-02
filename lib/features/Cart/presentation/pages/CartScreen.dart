@@ -20,7 +20,6 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -28,18 +27,20 @@ class _CartScreenState extends State<CartScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildOrderDetailsHeader(),
-            _buildCartItems(),
-            _buildOrderInfo(),
-            _buildCheckoutButton(),
-          ],
+      body: Container(
+        color: Colors.grey.shade100,
+        child: Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildOrderDetailsHeader(),
+              _buildCartItems(),
+              _buildOrderInfo(),
+              _buildCheckoutButton(),
+            ],
+          ),
         ),
       ),
     );
@@ -81,8 +82,7 @@ class _CartScreenState extends State<CartScreen> {
   Widget _buildCartContent() {
     final CartViewModel cartViewModel = s1<CartViewModel>();
 
-
-  List<CartItemEntity> shoppingCart = cartViewModel.shoppingCart;
+    List<CartItemEntity> shoppingCart = cartViewModel.shoppingCart;
 
     if (shoppingCart.isNotEmpty) {
       return Column(
@@ -113,9 +113,9 @@ class _CartScreenState extends State<CartScreen> {
         children: shoppingCart
             .map(
               (cartItem) => CartItem(
-            cartItem: cartItem,
-          ),
-        )
+                cartItem: cartItem,
+              ),
+            )
             .toList(),
       ),
     );
@@ -178,27 +178,26 @@ class _CartScreenState extends State<CartScreen> {
     final CartViewModel cartViewModel = s1<CartViewModel>();
 
     Size size = MediaQuery.of(context).size;
-   return Consumer<CartViewModel>(
+    return Consumer<CartViewModel>(
       builder: (context, value, child) => Column(
-         children: [
+        children: [
           _buildOrderRow("Sub Total", "\$${cartViewModel.cartSubTotal}"),
-      SizedBox(height: size.height * 0.008),
-      _buildOrderRow("Shipping", "+\$${cartViewModel.shippingCharge}"),
-      SizedBox(height: size.height * 0.015),
-      _buildOrderRow(
-        "Total",
-        "\$${cartViewModel.cartTotal}",
-        fontWeight: FontWeight.w500,
-      ),
-      SizedBox(height: size.height * 0.030),
-      ],
-
+          SizedBox(height: size.height * 0.008),
+          _buildOrderRow("Shipping", "+\$${cartViewModel.shippingCharge}"),
+          SizedBox(height: size.height * 0.015),
+          _buildOrderRow(
+            "Total",
+            "\$${cartViewModel.cartTotal}",
+            fontWeight: FontWeight.w500,
+          ),
+          SizedBox(height: size.height * 0.030),
+        ],
       ),
     );
-
   }
 
-  Widget _buildOrderRow(String label, String value, {FontWeight fontWeight = FontWeight.normal}) {
+  Widget _buildOrderRow(String label, String value,
+      {FontWeight fontWeight = FontWeight.normal}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -224,9 +223,11 @@ class _CartScreenState extends State<CartScreen> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height * 0.055,
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, '/PaymentScreen');
+          },
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.black,
+            backgroundColor: Colors.deepPurpleAccent,
             elevation: 0,
             shape: RoundedRectangleBorder(
               side: BorderSide.none,
@@ -234,11 +235,14 @@ class _CartScreenState extends State<CartScreen> {
             ),
           ),
           child: Center(
-            child: Text(
-              "Checkout (\$${cartViewModel.cartTotal})",
-              style: GoogleFonts.poppins(),
+              child: Text(
+            "CHECKOUT",
+            style: GoogleFonts.poppins(
+              color: Colors.white,
+              fontWeight: FontWeight.w600,
+              fontSize: 16,
             ),
-          ),
+          )),
         ),
       );
     } else {
